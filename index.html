@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistem Dispensasi Siswa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .glass-morphism {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      .active-tab {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 0.5rem;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-blue-600 text-white shadow-lg p-4 mb-6">
+      <div class="container mx-auto flex justify-between items-center">
+        <!-- Logo & Title Section -->
+        <div class="flex items-center space-x-3">
+          <div class="bg-white p-1 rounded-lg shadow-md flex items-center justify-center overflow-hidden" style="width: 45px; height: 45px;">
+            <img 
+  src="https://drive.google.com/uc?id=1YrpRFdAZsZWeFl0V5ihYbhyoU9BL_K5r" 
+  alt="Logo SMASA Magetan" 
+  class="max-w-full max-h-full object-contain"
+/>
+          </div>
+          <div class="flex flex-col">
+            <h1 class="text-xl font-bold tracking-tight leading-none">Dispensasi Siswa</h1>
+            <span class="text-[10px] uppercase tracking-widest opacity-80 font-semibold">SMAN 1 Magetan</span>
+          </div>
+        </div>
+
+        <div class="hidden md:flex space-x-2">
+          <button
+            onclick="switchTab('form')"
+            class="px-4 py-2 hover:bg-blue-500 rounded-lg transition"
+          >
+            Ajukan
+          </button>
+          <button
+            onclick="switchTab('status')"
+            class="px-4 py-2 hover:bg-blue-500 rounded-lg transition"
+          >
+            Cek Status
+          </button>
+          <button
+            onclick="switchTab('admin')"
+            class="bg-blue-700 px-4 py-2 rounded-lg hover:bg-blue-800 transition shadow-md"
+          >
+            Admin
+          </button>
+        </div>
+
+        <!-- Mobile Toggle Simple -->
+        <div class="md:hidden">
+          <button onclick="switchTab('form')" class="p-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16m-7 6h7"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container mx-auto px-4 pb-12">
+      <!-- Section: Form Pengajuan -->
+      <section id="tab-form" class="max-w-2xl mx-auto">
+        <div class="glass-morphism p-8 rounded-2xl shadow-xl">
+          <div class="flex items-center space-x-3 mb-6 border-b pb-4">
+            <h2 class="text-2xl font-semibold text-slate-800">
+              Formulir Dispensasi
+            </h2>
+          </div>
+          <form id="dispenForm" class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-slate-700"
+                >Nama Lengkap</label
+              >
+              <input
+                type="text"
+                name="nama"
+                required
+                class="mt-1 block w-full px-4 py-2 border border-slate-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-slate-700"
+                  >Kelas</label
+                >
+                <input
+                  type="text"
+                  name="kelas"
+                  placeholder="XII-IPA-1"
+                  required
+                  class="mt-1 block w-full px-4 py-2 border border-slate-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-slate-700"
+                  >NISN</label
+                >
+                <input
+                  type="number"
+                  name="nisn"
+                  required
+                  class="mt-1 block w-full px-4 py-2 border border-slate-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-slate-700"
+                >Alasan Dispensasi</label
+              >
+              <textarea
+                name="alasan"
+                rows="3"
+                required
+                class="mt-1 block w-full px-4 py-2 border border-slate-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+                placeholder="Sakit, Lomba, Kepentingan Keluarga, dll."
+              ></textarea>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-slate-700"
+                >Durasi (Jam/Hari)</label
+              >
+              <input
+                type="text"
+                name="durasi"
+                placeholder="Contoh: 2 Jam atau 1 Hari"
+                required
+                class="mt-1 block w-full px-4 py-2 border border-slate-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+            <button
+              type="submit"
+              class="w-full bg-blue-600 text-white font-bold py-3 rounded-md hover:bg-blue-700 transition transform active:scale-95"
+            >
+              Kirim Pengajuan
+            </button>
+          </form>
+          <div
+            id="formMsg"
+            class="mt-4 hidden p-3 rounded text-center font-medium"
+          ></div>
+        </div>
+      </section>
+
+      <!-- Section: Status Pengajuan (Siswa) -->
+      <section id="tab-status" class="hidden max-w-4xl mx-auto">
+        <div class="glass-morphism p-8 rounded-2xl shadow-xl">
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-semibold text-slate-800">Status Saya</h2>
+            <button
+              onclick="loadDataSiswa()"
+              class="flex items-center text-blue-600 text-sm font-medium hover:underline"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-4 w-4 mr-1"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                />
+              </svg>
+              Refresh
+            </button>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-slate-200">
+              <thead>
+                <tr class="bg-slate-50">
+                  <th
+                    class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
+                  >
+                    Tgl
+                  </th>
+                  <th
+                    class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
+                  >
+                    Nama
+                  </th>
+                  <th
+                    class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
+                  >
+                    Alasan
+                  </th>
+                  <th
+                    class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider"
+                  >
+                    Status
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="listStatus" class="bg-white divide-y divide-slate-200">
+                <!-- Data will be loaded here -->
+                <tr>
+                  <td colspan="4" class="px-4 py-8 text-center text-slate-400">
+                    Klik refresh untuk memuat data
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Panel Admin -->
+      <section id="tab-admin" class="hidden max-w-5xl mx-auto">
+        <div
+          class="glass-morphism p-8 rounded-2xl shadow-xl border-t-4 border-blue-600"
+        >
+          <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-semibold text-slate-800">
+              Panel Persetujuan Guru
+            </h2>
+            <button
+              onclick="loadDataAdmin()"
+              class="bg-slate-100 px-4 py-2 rounded-md hover:bg-slate-200 transition text-sm font-medium"
+            >
+              Muat Ulang
+            </button>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-slate-200">
+              <thead>
+                <tr class="bg-slate-50 text-slate-600">
+                  <th class="px-4 py-3 text-left text-xs font-bold uppercase">
+                    Waktu
+                  </th>
+                  <th class="px-4 py-3 text-left text-xs font-bold uppercase">
+                    Siswa
+                  </th>
+                  <th class="px-4 py-3 text-left text-xs font-bold uppercase">
+                    Alasan
+                  </th>
+                  <th class="px-4 py-3 text-center text-xs font-bold uppercase">
+                    Aksi
+                  </th>
+                </tr>
+              </thead>
+              <tbody id="listAdmin" class="bg-white divide-y divide-slate-200">
+                <!-- Admin data will be loaded here -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer
+      class="fixed bottom-0 w-full text-center p-3 text-slate-400 text-xs bg-white border-t"
+    >
+      &copy; 2024 Sistem Informasi Sekolah - E-Dispensasi Siswa
+    </footer>
+
+    <script>
+      const API_URL = "URL_WEB_APP_SCRIPT_ANDA_DI_SINI";
+
+      // 1. Fungsi Navigasi
+      function switchTab(tabName) {
+        document.getElementById("tab-form").classList.add("hidden");
+        document.getElementById("tab-status").classList.add("hidden");
+        document.getElementById("tab-admin").classList.add("hidden");
+
+        document.getElementById("tab-" + tabName).classList.remove("hidden");
+
+        if (tabName === "status") loadDataSiswa();
+        if (tabName === "admin") loadDataAdmin();
+      }
+
+      // 2. Kirim Form
+      document.getElementById("dispenForm").onsubmit = async function (e) {
+        e.preventDefault();
+        const msg = document.getElementById("formMsg");
+        const btn = this.querySelector("button");
+
+        msg.className = "mt-4 p-3 rounded text-center bg-blue-100 text-blue-700 block";
+        msg.innerText = "Sedang mengirim...";
+        btn.disabled = true;
+
+        const data = Object.fromEntries(new FormData(this).entries());
+
+        try {
+          // Simulasi atau Fetch ke API
+          const response = await fetch(API_URL, {
+            method: "POST",
+            mode: "no-cors", 
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ action: "tambah", payload: data }),
+          });
+
+          msg.className = "mt-4 p-3 rounded text-center bg-green-100 text-green-700 block";
+          msg.innerText = "✅ Pengajuan Berhasil Terkirim!";
+          this.reset();
+        } catch (error) {
+          msg.className = "mt-4 p-3 rounded text-center bg-red-100 text-red-700 block";
+          msg.innerText = "❌ Gagal mengirim: " + error.message;
+        } finally {
+          btn.disabled = false;
+        }
+      };
+
+      // 3. Ambil Data
+      async function loadDataSiswa() {
+        const list = document.getElementById("listStatus");
+        list.innerHTML = `<tr><td colspan="4" class="p-4 text-center">Memuat data...</td></tr>`;
+
+        try {
+          const res = await fetch(API_URL + "?action=ambilData");
+          const data = await res.json();
+          renderSiswa(data);
+        } catch (e) {
+          list.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-red-500">Gagal memuat data</td></tr>`;
+        }
+      }
+
+      function renderSiswa(data) {
+        const list = document.getElementById("listStatus");
+        if (!data || data.length === 0) {
+          list.innerHTML = '<tr><td colspan="4" class="p-4 text-center">Belum ada data</td></tr>';
+          return;
+        }
+        list.innerHTML = data
+          .map(
+            (item) => `
+          <tr>
+            <td class="px-4 py-3 text-sm">${item.tanggal || "-"}</td>
+            <td class="px-4 py-3 text-sm font-medium">${item.nama}</td>
+            <td class="px-4 py-3 text-sm">${item.alasan}</td>
+            <td class="px-4 py-3 text-sm">
+              <span class="px-2 py-1 rounded-full text-xs font-bold ${getStatusClass(item.status)}">
+                ${item.status || "Pending"}
+              </span>
+            </td>
+          </tr>`
+          )
+          .join("");
+      }
+
+      function getStatusClass(status) {
+        if (status === "Disetujui") return "bg-green-100 text-green-700";
+        if (status === "Ditolak") return "bg-red-100 text-red-700";
+        return "bg-yellow-100 text-yellow-700";
+      }
+
+      async function loadDataAdmin() {
+        const list = document.getElementById("listAdmin");
+        list.innerHTML = `<tr><td colspan="4" class="p-4 text-center">Memuat antrean...</td></tr>`;
+      }
+    </script>
+  </body>
+</html>
